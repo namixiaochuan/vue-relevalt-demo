@@ -1,0 +1,46 @@
+{
+  "tips001": "userType 为 sessionStorage 时 用户缓存为 sessionStorage;为 localStorage 时 用户缓存为 localStorage 缓存",
+  "userType": "localStorage",
+  "key": "famp",
+  "title": "北京市因公出入境管理服务系统",
+  "indexTitle": "北京市因公出入境管理服务系统",
+  "infoTitle": "北京市因公出入境管理服务系统",
+  "logo": "京",
+  "governmentCode": "政府网站标识码：1100000175",
+  "copyrightName": "主办单位：北京市人民政府外事办公室",
+  "copyrightName2": "版权所有：北京市人民政府外事办公室",
+  "address": "",
+  "postcode": "",
+  "undertake": "承办：北京市人民政府外事办公室信息中心",
+  "email": "",
+  "copyrightNum": "",
+  "copyrightNum2": "京ICP备05083568-1号",
+  "internetName": "北京市因公出入境管理服务系统",
+  "srcLogo": "assets/img/logo/logo_h.png",
+  "srcLogoTwo": "assets/img/logo/logo_min.png",
+  "srcLogoThree": "",
+  "srcBanner": "/assets/img/common/banner.png",
+  "baseClass": "theme-internet-red",
+  "whiteList": ["/login", "/404", "/401", "/lock"],
+  "whiteTagList": ["/login", "/404", "/401", "/lock"],
+  "lockPage": "/lock",
+  "tokenTime": 6000,
+  "statusWhiteList": [428],
+  "isFirstPage": false,
+  "fistPage": {
+    "label": "首页",
+    "value": "/wel/index",
+    "params": {},
+    "query": {},
+    "group": [],
+    "close": false
+  },
+  "menu": {
+    "props": {
+      "label": "label",
+      "path": "path",
+      "icon": "icon",
+      "children": "children"
+    }
+  }
+}

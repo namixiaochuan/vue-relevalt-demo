@@ -1,0 +1,140 @@
+@keyframes error000animation {
+  0% {
+    transform: rotateZ(0deg);
+  }
+  20% {
+    transform: rotateZ(-60deg);
+  }
+  40% {
+    transform: rotateZ(-10deg);
+  }
+  60% {
+    transform: rotateZ(50deg);
+  }
+  80% {
+    transform: rotateZ(-20deg);
+  }
+  100% {
+    transform: rotateZ(0deg);
+  }
+}
+
+.error000 {
+  .box-card {
+    height: 100%;
+  }
+
+  &-body-con {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    &-title {
+      text-align: center;
+      font-size: 240px;
+      font-weight: 700;
+      color: #2d8cf0;
+      height: 260px;
+      line-height: 260px;
+      margin-top: 40px;
+
+      span {
+        left: -34px;
+        position: relative;
+        display: inline-block;
+        color: #19be6b;
+        font-size: 230px;
+        animation: error000animation 3s ease 0s infinite alternate;
+      }
+    }
+
+    &-message {
+      display: block;
+      text-align: center;
+      font-size: 26px;
+      font-weight: 500;
+      letter-spacing: 12px;
+      color: #dddde2;
+    }
+  }
+
+  &-btn-con {
+    text-align: center;
+    padding: 20px 0;
+    margin-bottom: 40px;
+  }
+
+
+  //320px — 480px: Mobile devices
+  @media screen and (max-width: 480px) {
+    &-body-con {
+      width: 80%;
+      height: 500px;
+
+      &-title {
+        font-size: 90px;
+        span {
+          font-size: 90px;
+          left: -14px;
+        }
+      }
+      &-message {
+        font-size: 12px;
+      }
+      .el-button {
+        min-width: 100px;
+      }
+    }
+  }
+  //481px — 768px: iPads, Tablets
+  @media screen and (min-width: 481px) and (max-width: 760px) {
+    &-body-con {
+      width: 400px;
+      height: 500px;
+
+      &-title {
+        font-size: 140px;
+        span {
+          font-size: 140px;
+        }
+      }
+      &-message {
+        font-size: 16px;
+      }
+      .el-button {
+        min-width: 100px;
+      }
+    }
+  }
+  //769px — 1024px: Small screens, laptops
+  @media screen and (min-width: 769px) and (max-width: 1024px) {
+    &-body-con {
+      width: 700px;
+      height: 500px;
+      .el-button {
+        min-width: 200px;
+      }
+    }
+  }
+  //1025px — 1200px: Desktops, large screens
+  @media screen and (min-width: 1025px) and (max-width: 1200px) {
+    &-body-con {
+      width: 700px;
+      height: 500px;
+      .el-button {
+        min-width: 200px;
+      }
+    }
+  }
+  //1201px and more —  Extra large screens, TV
+  @media screen and (min-width: 1201px) {
+    &-body-con {
+      width: 700px;
+      height: 500px;
+      .el-button {
+        min-width: 200px;
+      }
+    }
+  }
+}
