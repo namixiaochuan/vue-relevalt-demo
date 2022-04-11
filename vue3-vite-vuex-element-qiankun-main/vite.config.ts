@@ -1,9 +1,12 @@
 import {defineConfig} from 'vite'
 import vue from "@vitejs/plugin-vue"
+import { viteMockServe } from "vite-plugin-mock";
+import Pages from 'vite-plugin-pages'
 
 const {resolve} = require('path')
 // const innerUrlUi = `http://111.62.12.163:${process.env.VUE_APP_PORT}`
 const url = `http://111.62.12.163:21680`
+let viteMockServeInjectCode = ''
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -14,7 +17,14 @@ export default defineConfig({
             {find: '@', replacement: resolve(__dirname, 'src')},
         ],
     },
-    plugins: [vue()],
+    // plugins: [vue()],
+    plugins: [vue() ,Pages() ,viteMockServe({
+            // default
+            mockPath: 'src/mockjs/index',
+            localEnabled: true,
+            prodEnabled: true,
+            injectCode: viteMockServeInjectCode
+        })],
     server: {
         open: true,
         /* 设置为0.0.0.0则所有的地址均能访问 */
@@ -22,7 +32,7 @@ export default defineConfig({
         port: 9001,
         https: false,
         proxy: {
-            '/auth': url,
+            // '/auth': url,
             '/admin': url,
             //   '/auth': {
             //   target: url, // 所要代理的目标地址

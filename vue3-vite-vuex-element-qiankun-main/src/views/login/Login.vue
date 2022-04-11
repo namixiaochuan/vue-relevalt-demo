@@ -23,6 +23,9 @@
 <script lang="ts">
 import store from '@/store'
 import { useRouter } from 'vue-router'
+import axios from 'axios'
+const instance = axios.create()
+import {hitokoto} from '../../api/login'
 // import {createStore, useStore, Store, createLogger} from "vuex"
 import {
   defineComponent, // 它并没有实现任何的逻辑，只是把接收的 Object 直接返回，它的存在是完全让传入的整个对象获得对应的类型，它的存在就是完全为了服务 TypeScript 而存在的。
@@ -68,6 +71,21 @@ export default defineComponent({
     onMounted(() => {
       console.log("=============234================"); // 正常
     })
+    // 这是一个导出api
+    // hitokoto()
+    //     .then((res) => {
+    //       console.log('请求成功数据', res.data)
+    //     })
+    //     .catch((err) => {
+    //       console.log('请求失败数据', err)
+    //     })
+    const reqData = {
+      name: '张三',
+      age: 12,
+      birthday: '2021/12/21'
+    }
+    instance.post('/api/post/delay', reqData)
+
     const submitForm = (formEl: FormInstance | undefined) => {
       if (!formEl) return
       formEl.validate((valid) => {

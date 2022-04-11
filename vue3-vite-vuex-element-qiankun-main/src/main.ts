@@ -8,6 +8,7 @@ import store from './store'
 import '@/permission' // 权限
 import {registerMicroApps, start, setDefaultMountApp, MicroAppStateActions} from "qiankun";
 import microApps from '@/utils/qiankun-micro'
+// import './mockjs/index'
 
 // 引入公共组件
 import basicContainer from '@/components/basic-container/main.vue'

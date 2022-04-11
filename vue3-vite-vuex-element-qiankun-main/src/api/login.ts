@@ -47,3 +47,10 @@ export const logout = () => {
         method: 'post'
     })
 }
+
+export const hitokoto = () => {
+    return request({
+        url: '/api/hitokoto',
+        method: 'post'
+    })
+}
