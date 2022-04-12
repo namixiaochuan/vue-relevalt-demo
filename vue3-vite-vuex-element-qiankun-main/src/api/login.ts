@@ -50,7 +50,7 @@ export const logout = () => {
 
 export const hitokoto = () => {
     return request({
-        url: '/api/hitokoto',
-        method: 'post'
+        url: '/api/user',
+        method: 'get'
     })
 }
