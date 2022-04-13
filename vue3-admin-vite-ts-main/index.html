@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="./favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Noto+Sans+SC:100,300,400,500,700,900"
+    />
+
+    <title><%- title %></title>
+    <script src="https://unpkg.com/css-doodle@0.15.3/css-doodle.min.js"></script>
+<style>
+  css-doodle {
+    --color: @p(#51eaea, #fffde1, #ff9d76, #FB3569);
+
+    --rule: ( :doodle {
+        @grid: 30x1 / 18vmin;
+        --deg: @p(-180deg, 180deg);
+      }
+
+      :container {
+        perspective: 30vmin;
+      }
+
+      :after, :before {
+        content: '';
+        background: var(--color);
+        @place-cell: @r(100%) @r(100%);
+        @size: @r(6px);
+        @shape: heart;
+      }
+
+      @place-cell: center;
+      @size: 100%;
+      box-shadow: @m2(0 0 50px var(--color));
+      background: @m100(radial-gradient(var(--color) 50%, transparent 0) @r(-20%, 120%) @r(-20%, 100%) / 1px 1px no-repeat);
+      will-change: transform, opacity;
+      animation: scale-up 12s linear infinite;
+      animation-delay: calc(-12s / @I * @i);
+
+      @keyframes scale-up {
+        0%, 95.01%, 100% {
+          transform: translateZ(0) rotate(0);
+          opacity: 0;
+        }
+
+        10% {
+          opacity: 1;
+        }
+
+        95% {
+          transform: translateZ(35vmin) rotateZ(@var(--deg));
+        }
+      }
+
+    )
+  }
+</style>
+  </head>
+  <body>
+    <div id="app">
+      <style>
+        * {
+          padding: 0;
+          margin: 0;
+        }
+        .w-screen {
+          width: 100vw;
+        }
+        .h-screen {
+          height: 100vh;
+        }
+        .center-bar {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+        .bar:nth-child(1) {
+          animation-delay: 0.2s;
+        }
+        .bar:nth-child(2) {
+          animation-delay: 0.4s;
+        }
+        .bar:nth-child(3) {
+          animation-delay: 0.6s;
+        }
+        .bar:nth-child(4) {
+          animation-delay: 0.8s;
+        }
+        .bar:nth-child(5) {
+          animation-delay: 1s;
+        }
+        .bar:nth-child(6) {
+          animation-delay: 1.2s;
+        }
+        .bar:nth-child(7) {
+          animation-delay: 1.4s;
+        }
+        .bar:nth-child(8) {
+          animation-delay: 1.6s;
+        }
+        @keyframes loading {
+          0% {
+            transform: scaleY(0.1);
+            background-color: transparent;
+          }
+          50% {
+            transform: scaleY(1);
+            background-color: #2ecc71;
+          }
+          100% {
+            transform: scaleY(0.1);
+            background-color: transparent;
+          }
+        }
+        .bar {
+          width: 4px;
+          height: 45px;
+          background-color: transparent;
+          display: inline-block;
+          transform-origin: botton center;
+          animation: loading 1.5s ease-in-out infinite;
+          margin-left: 3px;
+        }
+      </style>
+      <div class="w-screen h-screen">
+        <div class=" center-bar">
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
