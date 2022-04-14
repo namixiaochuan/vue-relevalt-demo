@@ -8,6 +8,7 @@ export interface ResponseData {
   message?: string;
   data?: any;
 }
+console.log('==================================', baseConfig.baseURL)
 const serve = axios.create({
   baseURL: baseConfig.baseURL,
   timeout: baseConfig.httpTimeOut,

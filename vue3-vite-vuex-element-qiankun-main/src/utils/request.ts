@@ -7,6 +7,7 @@ import qs from "qs";
 
 // console.log('==================', store)
 const service = axios.create({
+    baseURL: '',
     timeout: 5000 // request timeout
 });
 // 发起请求之前的拦截器

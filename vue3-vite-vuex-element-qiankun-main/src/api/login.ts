@@ -48,9 +48,11 @@ export const logout = () => {
     })
 }
 
-export const hitokoto = () => {
+export const hitokoto = (data = {"username":"12312","password":"3123123","isRemenber":false}) => {
+    console.log('================================')
     return request({
-        url: '/api/user',
-        method: 'get'
+        url: '/api/user/login',
+        method: 'post',
+        data
     })
 }

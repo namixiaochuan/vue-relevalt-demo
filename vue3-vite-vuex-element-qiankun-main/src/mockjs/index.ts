@@ -1,147 +1,114 @@
-import { MockMethod } from 'vite-plugin-mock'
-/*
- * MockMethod结构说明
-{
-  // 请求地址
-  url: string;
-  // 请求方式
-  method?: MethodType;
-  // 设置响应结果返回的延迟时间
-  timeout?: number;
-  // 状态吗
-  statusCode?:number;
-  // 响应数据（JSON）
-  response?: ((opt: { [key: string]: string; body: Record<string,any>; query:  Record<string,any>, headers: Record<string, any>; }) => any) | any;
-  // 响应（非JSON）
-  rawResponse?: (req: IncomingMessage, res: ServerResponse) => void;
-}
-*/
+import { MockMethod } from "vite-plugin-mock";
+import { Random,mock } from "mockjs";
+console.log();
 
-export default [
-    {
-        url: '/api/get/normal',
-        method: 'get',
-        response: ({ query }: any) => {
-            console.log('请求参数', query)
-            return {
-                code: 0,
-                data: {
-                    serverSay: 'normal-服务端响应' + new Date().toLocaleDateString(),
-                    reqData: query
-                }
-            }
+const successCode = 200;
+const hasNotToken = 401;
+const hasNotPermission = 403;
+const successMsg = "操作成功"
+const reutnData = (token,data) =>{
+    if(token) {
+        return {
+            code:successCode,
+            message:successMsg,
+            data
         }
-    },
-    {
-        url: '/api/get/delay',
-        timeout: 3000,
-        method: 'get',
-        response: ({ query }: any) => {
-            console.log('请求参数', query)
-            return {
-                code: 0,
-                data: {
-                    serverSay: 'delay-服务端响应' + new Date().toLocaleDateString(),
-                    reqData: query
-                }
-            }
-        }
-    },
-    {
-        url: '/api/post/normal',
-        method: 'post',
-        response: ({ body }: any) => {
-            return {
-                code: 0,
-                data: {
-                    serverSay: 'normal-post-服务端响应' + new Date().toLocaleDateString(),
-                    reqData: body
-                }
-            }
-        }
-    },
-    {
-        url: '/api/post/delay',
-        method: 'post',
-        timeout: 2000,
-        response: ({ body }: any) => {
-            return {
-                code: 0,
-                data: {
-                    serverSay: 'delay-post-服务端响应' + new Date().toLocaleDateString(),
-                    reqData: body
-                }
-            }
-        }
-    },
-    {
-        url: '/api/put/normal',
-        method: 'put',
-        response: ({ body }: any) => {
-            return {
-                code: 0,
-                data: {
-                    serverSay: 'normal-put-服务端响应' + new Date().toLocaleDateString(),
-                    reqData: body
-                }
-            }
-        }
-    },
-    {
-        url: '/api/put/delay',
-        method: 'put',
-        timeout: 3000,
-        response: ({ body }: any) => {
-            return {
-                code: 0,
-                data: {
-                    serverSay: 'delay-put-服务端响应' + new Date().toLocaleDateString(),
-                    reqData: body
-                }
-            }
-        }
-    },
-    {
-        url: '/api/del/normal',
-        method: 'delete',
-        response: ({ query }: any) => {
-            return {
-                code: 0,
-                data: {
-                    serverSay: 'normal-delete-服务端响应' + new Date().toLocaleDateString(),
-                    reqData: query
-                }
-            }
-        }
-    },
-    {
-        url: '/api/del/delay',
-        method: 'delete',
-        timeout: 3000,
-        response: ({ query }: any) => {
-            return {
-                code: 0,
-                data: {
-                    serverSay: 'normal-delete-服务端响应' + new Date().toLocaleDateString(),
-                    reqData: query
-                }
-            }
-        }
-    },
-    {
-        url: '/api/text',
-        method: 'post',
-        rawResponse: async (req, res) => {
-            let reqbody = ''
-            await new Promise((resolve) => {
-                req.on('data', (chunk) => {
-                    reqbody += chunk
-                })
-                req.on('end', () => resolve(undefined))
-            })
-            res.setHeader('Content-Type', 'text/plain')
-            res.statusCode = 200
-            res.end(`hello, ${reqbody}`)
+    } else {
+        return {
+            code:hasNotToken,
+            message:"未登录",
+            data:{}
         }
     }
-] as MockMethod[]
+}
+export default [
+    {
+        url: "/api/user/info",
+        method: "get",
+        response: req => {
+            let permissions:string[] = [];
+            if(req.headers["access_token"].includes("admin")) {
+                permissions.push("admin")
+            } else {
+                permissions.push("user")
+            }
+            return reutnData("1231232123",{
+                username: "我不爱吃鱼鱼鱼鱼",
+                permissions,
+                email: Random.email(),
+                avater: Random.image("64x64", "red", "yuyuyu"),
+            })
+        },
+    },
+    {
+        url: "/api/user/login",
+        method: "post",
+        response: req => {
+            console.log(req.body);
+            let token:string = ""
+            if(req.body["username"].includes("admin")) {
+                token ="admin_123ashdkhaskjdhk"
+            } else {
+                token = "user_kdhakjsoib234oisd2480asd.asdas214asd"
+            }
+            return {
+                code: 200,
+                data: {
+                    token,
+                },
+            };
+        },
+    },
+    {
+        url: "/api/post",
+        method: "post",
+        timeout: 2000,
+        response: {
+            code: 0,
+            data: {
+                name: "vben",
+            },
+        },
+    },
+    {
+        url:"/api/baseTable",
+        method:"get",
+        response:(req)=>{
+            let {pageSize,currentPage} = req.query;
+            return {
+                code:0,
+                messgae:"ok",
+                data:mock({
+                    "total":400,
+                    [`list|${pageSize}`]:[
+                        {
+                            "name":"@word",
+                            "date":"@date",
+                            "sex|1":[0,1,2],
+                            "positon|1":["厨师长","学妹","loler","程序媛","程序猿"],
+                            "ins":"@csentence",
+                            "email":"@email",
+                            "domain":"@domain"
+                        }
+                    ]
+                })
+            }
+        }
+    },
+    {
+        url: "/api/text",
+        method: "post",
+        rawResponse: async (req, res) => {
+            let reqbody = "";
+            await new Promise(resolve => {
+                req.on("data", chunk => {
+                    reqbody += chunk;
+                });
+                req.on("end", () => resolve(undefined));
+            });
+            res.setHeader("Content-Type", "text/plain");
+            res.statusCode = 200;
+            res.end(`hello, ${reqbody}`);
+        },
+    },
+] as MockMethod[];
