@@ -1,5 +1,5 @@
 import {Module} from "vuex";
-import {loginByUsername, logout, GetMenu} from '../../api/login'
+import {loginByUsername, loginByUsername2, logout, GetMenu} from '../../api/login'
 import {getStore, setStore} from "@/utils/store";
 import {
     deepClone,
@@ -135,17 +135,18 @@ const actions = {
     },
     // 根据用户名登录
     async LoginByUsername({commit}, userInfo: any) {
-        console.log(userInfo)
-        const user = encryption({
-            data: userInfo,
-            key: "secloudsecloudse",
-            param: ["password"]
-        });
-        // 用户名加密，不需要请注释掉这两行
-        const username = usernameCropy(user.username)
-        user.username = username
-        console.log(username)
-        let response: any = await loginByUsername(user.username, user.password, user.code, user.randomStr, true)
+        // const user = encryption({
+        //     data: userInfo,
+        //     key: "secloudsecloudse",
+        //     param: ["password"]
+        // });
+        // // 用户名加密，不需要请注释掉这两行
+        // const username = usernameCropy(user.username)
+        // user.username = username
+        // console.log(username)
+        console.log(userInfo,'---------------')
+        let response: any = await loginByUsername2(userInfo)
+        console.log(response)
         const data = response;
         commit("SET_ACCESS_TOKEN", data.access_token);
         commit("SET_REFRESH_TOKEN", data.refresh_token);

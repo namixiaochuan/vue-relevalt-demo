@@ -22,6 +22,40 @@ const reutnData = (token,data) =>{
     }
 }
 export default [
+    // 登录获取参数
+    {
+        url: "/auth/oauth/token",
+        method: "post",
+        response: req => {
+            console.log('===============',req)
+            // console.log(Random.guid())
+            let params:any = {
+                access_token: Random.guid(),
+                dept_id: Random.id(),
+                expires_in: Random.id(),
+                license: "secloud",
+                realname: req.username,
+                refresh_token: Random.guid(),
+                scope: "server",
+                tenant_id: 1,
+                token_type: "bearer",
+                user_id: Random.id(),
+                username: req.username,
+            }
+            return params
+        },
+    },
+    // 获取目录列表
+    {
+        url: "/admin/menu",
+        method: "get",
+        response: req => {
+            console.log('===============',req)
+            // console.log(Random.guid())
+            let params:any = []
+            return params
+        },
+    },
     {
         url: "/api/user/info",
         method: "get",

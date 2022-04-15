@@ -8,6 +8,13 @@ import request from "../utils/request";
  * @param randomStr
  * @param isCrypto
  */
+export const loginByUsername2 = (data:any) => {
+    return request({
+        url: '/auth/oauth/token',
+        method: 'post',
+        data
+    })
+}
 export const loginByUsername = (username: string, password: string, code: string = '', randomStr: string, isCrypto: boolean) => {
     const grant_type = 'password'
     let requestData: any = {

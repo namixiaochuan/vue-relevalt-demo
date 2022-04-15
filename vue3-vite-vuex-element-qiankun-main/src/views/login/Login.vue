@@ -53,8 +53,8 @@ export default defineComponent({
       title: ''
     })
     let loginForm = reactive({
-      username: '',
-      password: ''
+      username: 'admin',
+      password: '1qaz!QAZ1qaz'
     })
     let rules = reactive({
       username: [
