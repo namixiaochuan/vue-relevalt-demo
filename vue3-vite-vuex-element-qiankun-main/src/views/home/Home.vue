@@ -1,11 +1,15 @@
 <template>
   <div class="template-body">
     Home
+    <el-button @click="logOut">登出</el-button>
   </div>
 </template>
 
 <script lang="ts">
 // import { useStore } from '@/store'; // 获取缓存
+import store from '@/store'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import { useRouter } from 'vue-router'
 import {
   defineComponent, // 它并没有实现任何的逻辑，只是把接收的 Object 直接返回，它的存在是完全让传入的整个对象获得对应的类型，它的存在就是完全为了服务 TypeScript 而存在的。
   reactive, // 实现响应式数据的方法
@@ -26,6 +30,7 @@ export default defineComponent({
   // props:{},
   // components: {},
   setup() {
+    const router = useRouter()
     let data = reactive({
       // 变量可以放这
     })
@@ -50,7 +55,36 @@ export default defineComponent({
     // onDeactivated(() => {})
     // 错误捕获
     // onErrorCaptured(() => {})
-    return {data};
+    const logOut = () =>{
+      ElMessageBox.confirm(
+          '确定要登出么?',
+          '提示',
+          {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning',
+          }
+      )
+          .then(() => {
+            store.dispatch('user/LogOut')
+                .then((res:any)=>{
+              router.push({path: '/login'})
+                  ElMessage({
+                    type: 'success',
+                    message: '登出成功',
+                  })
+            }).catch((err:any)=>{
+              console.log(err)
+            })
+          })
+          .catch(() => {
+            ElMessage({
+              type: 'info',
+              message: 'Delete canceled',
+            })
+          })
+    }
+    return {data, logOut};
   },
 });
 </script>

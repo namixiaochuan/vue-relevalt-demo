@@ -6,8 +6,23 @@
           <el-input v-model="loginForm.username"/>
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input v-model="loginForm.password"/>
+          <el-input :type="baseData.passwdType" v-model="loginForm.password">
+            <template #suffix>
+              <el-icon class="el-input__icon password-icon" @click="changePassword">
+                <View v-if="baseData.passwdType == 'password'"/>
+                <Hide v-else/>
+              </el-icon>
+            </template>
+          </el-input>
         </el-form-item>
+
+        <el-radio-group v-model="loginForm.system">
+          <el-radio :label="''">本系统</el-radio>
+          <el-radio :label="'/apply'">申报端</el-radio>
+          <el-radio :label="'/am'">管理端</el-radio>
+<!--          <el-radio :label="6">Option B</el-radio>-->
+<!--          <el-radio :label="9">Option C</el-radio>-->
+        </el-radio-group>
         <el-form-item>
           <el-row>
             <el-button type="primary" @click="submitForm(ruleFormRef)">提交
@@ -23,7 +38,7 @@
 <script lang="ts">
 import store from '@/store'
 import { useRouter } from 'vue-router'
-import {hitokoto} from '@/api/login'
+import { Hide, View } from '@element-plus/icons-vue'
 // import {createStore, useStore, Store, createLogger} from "vuex"
 import {
   defineComponent, // 它并没有实现任何的逻辑，只是把接收的 Object 直接返回，它的存在是完全让传入的整个对象获得对应的类型，它的存在就是完全为了服务 TypeScript 而存在的。
@@ -46,15 +61,18 @@ import {ElNotification} from 'element-plus'
 export default defineComponent({
   name: "reactive",
   // props:{},
-  // components: {},
+  components: {Hide, View},
   setup() {
     const router = useRouter()
+    let passwdType = 'password'
     let baseData = reactive({
-      title: ''
+      title: '',
+      passwdType: 'password'
     })
     let loginForm = reactive({
       username: 'admin',
-      password: '1qaz!QAZ1qaz'
+      password: '1qaz!QAZ1qaz',
+      system: ''
     })
     let rules = reactive({
       username: [
@@ -69,7 +87,22 @@ export default defineComponent({
     onMounted(() => {
       console.log("=============234================"); // 正常
     })
-    hitokoto()
+    /**
+     * 改变密码展示隐藏功能
+     * @param formEl
+     */
+    const changePassword = () =>{
+      console.log('=====================')
+      if (baseData.passwdType == 'password') {
+        baseData.passwdType = 'text'
+      } else {
+        baseData.passwdType = 'password'
+      }
+    }
+    /**
+     * 登录调用方法
+     * @param formEl
+     */
     const submitForm = (formEl: FormInstance | undefined) => {
       if (!formEl) return
       formEl.validate((valid) => {
@@ -77,7 +110,7 @@ export default defineComponent({
           console.log('submit!')
           store.dispatch('user/LoginByUsername', loginForm)
           .then((res:any)=>{
-            router.push({path: '/home'})
+            router.push({path: loginForm.system + '/home'})
           }).catch((err:any)=>{
             console.log(err)
           })
@@ -96,11 +129,11 @@ export default defineComponent({
       if (!formEl) return
       formEl.resetFields()
     }
-    return {baseData, loginForm, rules, ruleFormRef, submitForm, resetForm};
+    return {baseData, passwdType, changePassword, loginForm, rules, ruleFormRef, submitForm, resetForm};
   },
 });
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .login-body {
   width: 100%;
   height: 100%;
@@ -111,6 +144,9 @@ export default defineComponent({
 
   .login-form {
     width: 300px;
+  }
+  .el-input__icon.password-icon {
+    cursor: pointer;
   }
 }
 </style>

@@ -1,3 +1,6 @@
+import store from '@/store'
+import {ElMessage} from "element-plus";
+import { useRouter } from 'vue-router'
 // export const microApps = [
 //     {
 //         name: 'apply',
@@ -68,12 +71,18 @@ const microApps:any = [
     // },
 ];
 
+const logOut = () => {
+    store.dispatch('user/LogOut')
+}
+
 const apps = microApps.map((item: any) => {
     return {
         ...item,
         container: "#container", // 子应用挂载的div
         props: {
+            mainStore: store,
             routerBase: item.activeRule, // 下发基础路由
+            logOut: logOut, // 下发基础路由
             // getGlobalState: store.getGlobalState, // 下发getGlobalState方法
         },
     };

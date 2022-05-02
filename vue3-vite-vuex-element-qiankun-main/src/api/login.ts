@@ -55,11 +55,11 @@ export const logout = () => {
     })
 }
 
-export const hitokoto = (data = {"username":"12312","password":"3123123","isRemenber":false}) => {
-    console.log('================================')
-    return request({
-        url: '/api/user/login',
-        method: 'post',
-        data
-    })
-}
+// export const hitokoto = (data = {"username":"12312","password":"3123123","isRemenber":false}) => {
+//     console.log('================================')
+//     return request({
+//         url: '/api/user/login',
+//         method: 'post',
+//         data
+//     })
+// }

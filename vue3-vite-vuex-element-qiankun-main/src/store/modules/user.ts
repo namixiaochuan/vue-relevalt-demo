@@ -158,15 +158,11 @@ const actions = {
     // 登出
     async LogOut({commit}) {
         await logout()
-        commit("SET_MENU", []);
-        commit("SET_PERMISSIONS", []);
-        commit("SET_USER_INFO", {});
-        commit("SET_DEPT_INFO", {});
-        commit("SET_FA_DEPT_INFO", {});
-        commit("SET_ACCESS_TOKEN", "");
-        commit("SET_REFRESH_TOKEN", "");
-        commit("SET_EXPIRES_IN", "");
-        commit("DEL_ALL_TAG");
+        commit("SET_ACCESS_TOKEN", null);
+        commit("SET_REFRESH_TOKEN", null);
+        commit("SET_EXPIRES_IN", null);
+        commit("SET_MENU", null);
+        commit("IS_GET_ROLES", false);
         window.sessionStorage.clear();
         return true
     }

@@ -26,6 +26,7 @@ import basicContainer from '@/components/basic-container/main.vue'
 
 function render(props:any = {}) {
     const { container } = props;
+    console.log(props, '=============23=======props')
     // instance = createApp(App);
     // instance.use(ElementPlus)
     // instance.use(store)
@@ -42,6 +43,10 @@ function render(props:any = {}) {
     // 实例化公共组件
     app.component('basic-container', basicContainer);
 
+    // 全局方法
+    app.config.globalProperties.$logOut = props.logOut
+    app.config.globalProperties.$mainStore = props.mainStore
+
     app.use(store)
     app.use(router)
     app.use(ElementPlus)
@@ -51,6 +56,8 @@ function render(props:any = {}) {
 
 renderWithQiankun({
     mount(props) {
+        // app.config.globalProperties
+        // store.dispatch('user/LoginByUsername', loginForm)
         render(props);
         // 通讯api挂在在原型链上
         // instance.config.globalProperties.$onGlobalStateChange = props.onGlobalStateChange;

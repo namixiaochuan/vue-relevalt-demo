@@ -46,11 +46,11 @@ const routes: Array<RouteRecordRaw> = [
             isAuth: false
         }
     },
-    {
-        path: '/:pathMatch(.*)*',
-        name: '404',
-        component: import( /* webpackChunkName: "error-page" */ '@/views/error-page/404.vue'),
-    },
+    // {
+    //     path: '/:pathMatch(.*)*',
+    //     name: '404',
+    //     component: import( /* webpackChunkName: "error-page" */ '@/views/error-page/404.vue'),
+    // },
 ]
 
 const router = createRouter({

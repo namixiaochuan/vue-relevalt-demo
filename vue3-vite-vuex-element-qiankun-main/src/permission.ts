@@ -7,7 +7,7 @@ import {useStore} from './store/index'
 import store from './store/index'
 
 router.beforeEach((to, from, next) => {
-    // console.log(to, from, useStore(), store)
+    console.log('main-----',to, from, useStore(), store)
     // console.log(store.getters.access_token)
     // path: "/Login"
     // 访问根目录或者登录页判断是否登录状态

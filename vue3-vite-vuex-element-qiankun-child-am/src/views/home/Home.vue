@@ -1,6 +1,6 @@
 <template>
   <div class="template-body">
-    Home
+    Home am
   </div>
 </template>
 
