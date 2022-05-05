@@ -1,7 +1,7 @@
 import {
     validatenull
 } from '@/utils/tools'
-import website from '@/assets/json/website.json'
+import website from '@/assets/base/website.json'
 
 const keyName = website.key + '-';
 /**

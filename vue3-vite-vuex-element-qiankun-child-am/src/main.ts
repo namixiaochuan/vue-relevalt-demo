@@ -25,6 +25,7 @@ import basicContainer from '@/components/basic-container/main.vue'
 
 
 function render(props:any = {}) {
+    console.log('-----------props-------------', props)
     const { container } = props;
     // instance = createApp(App);
     // instance.use(ElementPlus)
@@ -41,6 +42,9 @@ function render(props:any = {}) {
     const app = createApp(App)
     // 实例化公共组件
     app.component('basic-container', basicContainer);
+    // 全局方法
+    app.config.globalProperties.$logout = props.logout
+    app.config.globalProperties.$mainStore = props.mainStore
 
     app.use(store)
     app.use(router)

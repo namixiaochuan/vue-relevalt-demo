@@ -1,18 +1,13 @@
 <template>
-  <div class="template-body">
-    <template  v-for="(item, index) in baseData.systemList">
-      <el-button v-if="item.path" type="primary" @click="jumpToChildSystem(item)" :key="index">{{item.name}}</el-button>
-    </template>
-    <el-button type="danger" @click="logOut">登出</el-button>
+  <div class="top-left-body">
+    <img class="title-logo" src="../../../assets/img/logo.jpg"/>
+    <h3 class="top-title">{{ baseData.website.title }}</h3>
   </div>
 </template>
 
 <script lang="ts">
-// import { useStore } from '@/store'; // 获取缓存
-import store from '@/store'
-import {systemList} from '@/assets/base/systemList.ts'
-import { ElMessage, ElMessageBox } from 'element-plus'
-import { useRouter } from 'vue-router'
+// import { useStore } from '/@/store'; // 获取缓存
+import {website} from '@/assets/base/website'
 import {
   defineComponent, // 它并没有实现任何的逻辑，只是把接收的 Object 直接返回，它的存在是完全让传入的整个对象获得对应的类型，它的存在就是完全为了服务 TypeScript 而存在的。
   reactive, // 实现响应式数据的方法
@@ -29,15 +24,14 @@ import {
 } from 'vue'
 
 export default defineComponent({
-  name: "Home",
+  name: "left",
   // props:{},
   // components: {},
   setup() {
-    const router = useRouter()
-    // 基础数据
+    console.log(website)
     let baseData = reactive({
       // 变量可以放这
-      systemList: systemList()
+      website: website('')
     })
     // const st = useStore();
     // console.log(st); // 正常
@@ -60,45 +54,31 @@ export default defineComponent({
     // onDeactivated(() => {})
     // 错误捕获
     // onErrorCaptured(() => {})
-    const logOut = () =>{
-      ElMessageBox.confirm(
-          '确定要登出么?',
-          '提示',
-          {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning',
-          }
-      )
-          .then(() => {
-            store.dispatch('user/LogOut')
-                .then((res:any)=>{
-              router.push({path: '/login'})
-                  ElMessage({
-                    type: 'success',
-                    message: '登出成功',
-                  })
-            }).catch((err:any)=>{
-              console.log(err)
-            })
-          })
-          .catch(() => {
-            // ElMessage({
-            //   type: 'info',
-            //   message: 'Delete canceled',
-            // })
-          })
-    }
-    /**
-     * 跳转到的子系统地址
-     */
-    const jumpToChildSystem = (data:any) =>{
-      console.log(data)
-      router.push({path: data.path + '/home'})
-    }
-    return {baseData, logOut, jumpToChildSystem};
+    return {baseData};
   },
 });
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
+// 样式基础
+@import '../../../style/common/base-setting.scss';
+.top-left-body {
+  .title-logo {
+    width: 30px;
+    height: 30px;
+    margin-top: 10px;
+    margin-left: 10px;
+    display: inline-block;
+    vertical-align: top;
+  }
+  .top-title {
+    font-size: $largestSize;
+    color: $bcWhite;
+    height: 50px;
+    line-height: 50px;
+    padding-left: 10px;
+    display: inline-block;
+    vertical-align: top;
+    width: calc(100% - 50px);
+  }
+}
 </style>

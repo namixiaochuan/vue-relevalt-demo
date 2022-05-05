@@ -21,6 +21,9 @@ const state = () => ({
     expires_in: getStore({
         name: "expires_in"
     }) || "",
+    userInfo: getStore({
+        name: "userInfo"
+    }) || {},
     keyLogin: getStore({
         name: "keyLogin"
     }) || false,
@@ -92,6 +95,15 @@ const mutations = {
             type: "session"
         });
     },
+    // 保存用户基础信息
+    SET_USER_INFO: (state: any, userInfo: any) => {
+        state.userInfo = userInfo;
+        setStore({
+            name: "userInfo",
+            content: state.userInfo,
+            type: "session"
+        });
+    },
     // 保存菜单
     SET_MENU: (state: any, menu: any) => {
         state.menu = menu;
@@ -144,10 +156,11 @@ const actions = {
         // const username = usernameCropy(user.username)
         // user.username = username
         // console.log(username)
-        console.log(userInfo,'---------------')
         let response: any = await loginByUsername2(userInfo)
         console.log(response)
         const data = response;
+        console.log(userInfo,'---------------', data)
+        commit("SET_USER_INFO", data);
         commit("SET_ACCESS_TOKEN", data.access_token);
         commit("SET_REFRESH_TOKEN", data.refresh_token);
         commit("SET_EXPIRES_IN", data.expires_in);

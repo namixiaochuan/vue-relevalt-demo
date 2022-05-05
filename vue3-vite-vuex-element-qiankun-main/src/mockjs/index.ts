@@ -32,13 +32,13 @@ export default [
                 dept_id: Random.id(),
                 expires_in: Random.id(),
                 license: "secloud",
-                realname: req.username,
+                realname: req.body.username,
                 refresh_token: Random.guid(),
                 scope: "server",
                 tenant_id: 1,
                 token_type: "bearer",
                 user_id: Random.id(),
-                username: req.username,
+                username: req.body.username,
             }
             return params
         },

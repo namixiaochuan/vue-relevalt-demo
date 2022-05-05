@@ -1,7 +1,7 @@
 <template>
   <div class="login-body">
     <basic-container class="login-form" :baseData="baseData">
-      <el-form :model="loginForm" ref="ruleFormRef" :rules="rules" label-width="80px">
+      <el-form class="login-form-body" :model="loginForm" ref="ruleFormRef" :rules="rules" label-width="80px">
         <el-form-item label="用户名" prop="username">
           <el-input v-model="loginForm.username"/>
         </el-form-item>
@@ -15,14 +15,15 @@
             </template>
           </el-input>
         </el-form-item>
-
-        <el-radio-group v-model="loginForm.system">
-          <el-radio :label="''">本系统</el-radio>
-          <el-radio :label="'/apply'">申报端</el-radio>
-          <el-radio :label="'/am'">管理端</el-radio>
-<!--          <el-radio :label="6">Option B</el-radio>-->
-<!--          <el-radio :label="9">Option C</el-radio>-->
-        </el-radio-group>
+        <el-form-item label="操作系统" prop="password">
+          <el-radio-group v-model="loginForm.system">
+            <el-radio v-for="(item, index) in baseData.systemList" :label="item.path" :key="index">{{ item.name }}</el-radio>
+<!--            <el-radio :label="'/apply'">申报端</el-radio>-->
+<!--            <el-radio :label="'/am'">管理端</el-radio>-->
+            <!--          <el-radio :label="6">Option B</el-radio>-->
+            <!--          <el-radio :label="9">Option C</el-radio>-->
+          </el-radio-group>
+        </el-form-item>
         <el-form-item>
           <el-row>
             <el-button type="primary" @click="submitForm(ruleFormRef)">提交
@@ -37,8 +38,9 @@
 
 <script lang="ts">
 import store from '@/store'
-import { useRouter } from 'vue-router'
-import { Hide, View } from '@element-plus/icons-vue'
+import {systemList} from '@/assets/base/systemList.ts'
+import {useRouter} from 'vue-router'
+import {Hide, View} from '@element-plus/icons-vue'
 // import {createStore, useStore, Store, createLogger} from "vuex"
 import {
   defineComponent, // 它并没有实现任何的逻辑，只是把接收的 Object 直接返回，它的存在是完全让传入的整个对象获得对应的类型，它的存在就是完全为了服务 TypeScript 而存在的。
@@ -67,7 +69,8 @@ export default defineComponent({
     let passwdType = 'password'
     let baseData = reactive({
       title: '',
-      passwdType: 'password'
+      passwdType: 'password',
+      systemList:systemList()
     })
     let loginForm = reactive({
       username: 'admin',
@@ -91,7 +94,7 @@ export default defineComponent({
      * 改变密码展示隐藏功能
      * @param formEl
      */
-    const changePassword = () =>{
+    const changePassword = () => {
       console.log('=====================')
       if (baseData.passwdType == 'password') {
         baseData.passwdType = 'text'
@@ -109,9 +112,9 @@ export default defineComponent({
         if (valid) {
           console.log('submit!')
           store.dispatch('user/LoginByUsername', loginForm)
-          .then((res:any)=>{
-            router.push({path: loginForm.system + '/home'})
-          }).catch((err:any)=>{
+              .then((res: any) => {
+                router.push({path: loginForm.system + '/home'})
+              }).catch((err: any) => {
             console.log(err)
           })
         } else {
@@ -143,8 +146,12 @@ export default defineComponent({
   align-items: center;
 
   .login-form {
-    width: 300px;
+    width: 500px;
+    .login-form-body {
+      margin-left: 50px;
+    }
   }
+
   .el-input__icon.password-icon {
     cursor: pointer;
   }

@@ -1,4 +1,5 @@
 import store from '@/store'
+import {logout} from './tools'
 import {ElMessage} from "element-plus";
 import { useRouter } from 'vue-router'
 // export const microApps = [
@@ -70,11 +71,6 @@ const microApps:any = [
     //     activeRule: "/questionbank",
     // },
 ];
-
-const logOut = () => {
-    store.dispatch('user/LogOut')
-}
-
 const apps = microApps.map((item: any) => {
     return {
         ...item,
@@ -82,7 +78,7 @@ const apps = microApps.map((item: any) => {
         props: {
             mainStore: store,
             routerBase: item.activeRule, // 下发基础路由
-            logOut: logOut, // 下发基础路由
+            logout: logout, // 下发基础路由
             // getGlobalState: store.getGlobalState, // 下发getGlobalState方法
         },
     };

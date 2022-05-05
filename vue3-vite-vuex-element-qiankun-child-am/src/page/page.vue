@@ -1,18 +1,19 @@
 <template>
-  <div class="template-body">
-    <template  v-for="(item, index) in baseData.systemList">
-      <el-button v-if="item.path" type="primary" @click="jumpToChildSystem(item)" :key="index">{{item.name}}</el-button>
-    </template>
-    <el-button type="danger" @click="logOut">登出</el-button>
+  <div class="page-body">
+    <!--    顶部样式-->
+    <top/>
+    <!--    侧面菜单-->
+    <sidebar :viewWidth="baseData.viewWidth" :viewHeight="baseData.viewHeight"/>
+    <!--    主题内容-->
+    <am-body :viewWidth="baseData.viewWidth" :viewHeight="baseData.viewHeight"/>
   </div>
 </template>
 
 <script lang="ts">
-// import { useStore } from '@/store'; // 获取缓存
-import store from '@/store'
-import {systemList} from '@/assets/base/systemList.ts'
-import { ElMessage, ElMessageBox } from 'element-plus'
-import { useRouter } from 'vue-router'
+// import { useStore } from '/@/store'; // 获取缓存
+import Top from './top/top.vue' // 顶部栏
+import Sidebar from './sidebar/sidebar.vue' // 侧边目录
+import AmBody from './amBody/amBody.vue'
 import {
   defineComponent, // 它并没有实现任何的逻辑，只是把接收的 Object 直接返回，它的存在是完全让传入的整个对象获得对应的类型，它的存在就是完全为了服务 TypeScript 而存在的。
   reactive, // 实现响应式数据的方法
@@ -29,16 +30,15 @@ import {
 } from 'vue'
 
 export default defineComponent({
-  name: "Home",
+  name: "page",
   // props:{},
-  // components: {},
+  components: {Top, Sidebar, AmBody},
   setup() {
-    const router = useRouter()
-    // 基础数据
     let baseData = reactive({
       // 变量可以放这
-      systemList: systemList()
-    })
+      viewWidth: document.documentElement.clientWidth || document.body.clientWidth,
+      viewHeight: document.documentElement.clientHeight || document.body.clientHeight,
+  })
     // const st = useStore();
     // console.log(st); // 正常
     // 【单步】模板编译/挂载之前
@@ -60,45 +60,12 @@ export default defineComponent({
     // onDeactivated(() => {})
     // 错误捕获
     // onErrorCaptured(() => {})
-    const logOut = () =>{
-      ElMessageBox.confirm(
-          '确定要登出么?',
-          '提示',
-          {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning',
-          }
-      )
-          .then(() => {
-            store.dispatch('user/LogOut')
-                .then((res:any)=>{
-              router.push({path: '/login'})
-                  ElMessage({
-                    type: 'success',
-                    message: '登出成功',
-                  })
-            }).catch((err:any)=>{
-              console.log(err)
-            })
-          })
-          .catch(() => {
-            // ElMessage({
-            //   type: 'info',
-            //   message: 'Delete canceled',
-            // })
-          })
-    }
-    /**
-     * 跳转到的子系统地址
-     */
-    const jumpToChildSystem = (data:any) =>{
-      console.log(data)
-      router.push({path: data.path + '/home'})
-    }
-    return {baseData, logOut, jumpToChildSystem};
+    return {baseData};
   },
 });
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
+.page-body {
+  height: 100%;
+}
 </style>

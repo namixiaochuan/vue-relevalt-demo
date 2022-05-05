@@ -1,9 +1,9 @@
 import {
     validatenull
 } from '@/utils/tools'
-import website from '@/assets/json/website.json'
+import {website} from '@/assets/base/website'
 
-const keyName = website.key + '-';
+const keyName = website('').key + '-';
 /**
  * 存储localStorage
  */

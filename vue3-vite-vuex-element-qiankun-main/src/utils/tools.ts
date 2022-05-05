@@ -1,4 +1,7 @@
 import CryptoJS from "crypto-js"
+import {ElMessage, ElMessageBox} from "element-plus";
+import store from "@/store";
+import router from '@/router'
 
 /**
  * 判断数据格式
@@ -132,4 +135,34 @@ export function validatenull(val:any) {
         return false;
     }
     return false;
+}
+
+export const logout = () =>{
+    ElMessageBox.confirm(
+        '确定要登出么?',
+        '提示',
+        {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning',
+        }
+    )
+        .then(() => {
+            store.dispatch('user/LogOut')
+                .then((res:any)=>{
+                    router.push({path: '/login'})
+                    ElMessage({
+                        type: 'success',
+                        message: '登出成功',
+                    })
+                }).catch((err:any)=>{
+                console.log(err)
+            })
+        })
+        .catch(() => {
+            // ElMessage({
+            //   type: 'info',
+            //   message: 'Delete canceled',
+            // })
+        })
 }

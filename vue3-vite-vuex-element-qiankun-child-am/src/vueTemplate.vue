@@ -26,7 +26,7 @@ export default defineComponent({
   // props:{},
   // components: {},
   setup() {
-    let data = reactive({
+    let baseData = reactive({
       // 变量可以放这
     })
     // const st = useStore();
@@ -50,9 +50,9 @@ export default defineComponent({
     // onDeactivated(() => {})
     // 错误捕获
     // onErrorCaptured(() => {})
-    return {data};
+    return {baseData};
   },
 });
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 </style>

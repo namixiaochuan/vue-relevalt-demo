@@ -1,5 +1,5 @@
 import {Module} from "vuex";
-import {loginByUsername, logout, GetMenu} from '../../api/login'
+// import {loginByUsername, loginByUsername2, logout, GetMenu} from '../../api/login'
 import {getStore, setStore} from "@/utils/store";
 import {
     deepClone,
@@ -21,6 +21,9 @@ const state = () => ({
     expires_in: getStore({
         name: "expires_in"
     }) || "",
+    userInfo: getStore({
+        name: "userInfo"
+    }) || {},
     keyLogin: getStore({
         name: "keyLogin"
     }) || false,
@@ -39,11 +42,23 @@ const state = () => ({
     isGetRoles: getStore({
         name: "isGetRoles"
     }) || false,
+    subSystem: getStore({
+        name: "subSystem"
+    }) || false,
 })
 
 const getters = {}
 
 const mutations = {
+    // 是否是子系统
+    SUB_SYSTEM: (state: any, subSystem: Boolean) => {
+        state.subSystem = subSystem;
+        setStore({
+            name: "subSystem",
+            content: state.subSystem,
+            type: "session"
+        });
+    },
     // 设置token
     SET_ACCESS_TOKEN: (state: any, access_token: string) => {
         state.access_token = access_token;
@@ -77,6 +92,15 @@ const mutations = {
         setStore({
             name: "keyLogin",
             content: state.keyLogin,
+            type: "session"
+        });
+    },
+    // 保存用户基础信息
+    SET_USER_INFO: (state: any, userInfo: any) => {
+        state.userInfo = userInfo;
+        setStore({
+            name: "userInfo",
+            content: state.userInfo,
             type: "session"
         });
     },
@@ -117,39 +141,40 @@ const actions = {
             commit("IS_GET_ROLES", true);
         }
     },
+    // 获取系统菜单
+    async subSystem({commit}, subSystem: Boolean) {
+        commit("SUB_SYSTEM", subSystem);
+    },
     // 根据用户名登录
-    async LoginByUsername({commit}, userInfo:any) {
-        console.log(userInfo)
-        const user = encryption({
-            data: userInfo,
-            key: "secloudsecloudse",
-            param: ["password"]
-        });
-        // 用户名加密，不需要请注释掉这两行
-        const username = usernameCropy(user.username)
-        user.username = username
-        console.log(username)
-        let response: any = await loginByUsername(user.username, user.password, user.code, user.randomStr, true)
-        const data = response;
-        commit("SET_ACCESS_TOKEN", data.access_token);
-        commit("SET_REFRESH_TOKEN", data.refresh_token);
-        commit("SET_EXPIRES_IN", data.expires_in);
-        commit("KEY_LOGIN", false);
-        // commit("CLEAR_LOCK");
+    async LoginByUsername({commit}, userInfo: any) {
+        // const user = encryption({
+        //     data: userInfo,
+        //     key: "secloudsecloudse",
+        //     param: ["password"]
+        // });
+        // // 用户名加密，不需要请注释掉这两行
+        // const username = usernameCropy(user.username)
+        // user.username = username
+        // console.log(username)
+        // let response: any = await loginByUsername2(userInfo)
+        // console.log(response)
+        // const data = response;
+        // console.log(userInfo,'---------------', data)
+        // commit("SET_ACCESS_TOKEN", data.access_token);
+        // commit("SET_REFRESH_TOKEN", data.refresh_token);
+        // commit("SET_EXPIRES_IN", data.expires_in);
+        // commit("KEY_LOGIN", false);
+        // // commit("CLEAR_LOCK");
         return true
     },
     // 登出
     async LogOut({commit}) {
         await logout()
-        commit("SET_MENU", []);
-        commit("SET_PERMISSIONS", []);
-        commit("SET_USER_INFO", {});
-        commit("SET_DEPT_INFO", {});
-        commit("SET_FA_DEPT_INFO", {});
-        commit("SET_ACCESS_TOKEN", "");
-        commit("SET_REFRESH_TOKEN", "");
-        commit("SET_EXPIRES_IN", "");
-        commit("DEL_ALL_TAG");
+        commit("SET_ACCESS_TOKEN", null);
+        commit("SET_REFRESH_TOKEN", null);
+        commit("SET_EXPIRES_IN", null);
+        commit("SET_MENU", null);
+        commit("IS_GET_ROLES", false);
         window.sessionStorage.clear();
         return true
     }
