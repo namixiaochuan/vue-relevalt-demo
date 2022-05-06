@@ -7,7 +7,7 @@ import {useStore} from './store/index'
 import store from './store/index'
 
 router.beforeEach((to, from, next) => {
-    console.log('main-----',to, from, useStore(), store)
+    console.log('main-----', to, from, useStore(), store)
     // console.log(store.getters.access_token)
     // path: "/Login"
     // 访问根目录或者登录页判断是否登录状态
@@ -15,18 +15,14 @@ router.beforeEach((to, from, next) => {
         next('Home')
         return
     }
+    // 获取目录数据
+    if (!store.getters.isGetRoles) {
+        store.dispatch('user/GetMenu')
+    }
     // console.log(store.getters.isGetRoles)
     // 判断是否登录状态
     if (store.getters.access_token) {
-        // 判断是否获取了基础数据
-        if (!store.getters.isGetRoles) {
-            store.dispatch('user/GetMenu').then((res: any) => {
-                // console.log(res)
-                next()
-            })
-        } else {
-            next()
-        }
+        next()
         // 不是登录页面，或非登录页面则跳转到登录页面
     } else if (!store.getters.access_token && !['/Login'].includes(to.path) || ['/'].includes(to.path)) {
         next('Login')

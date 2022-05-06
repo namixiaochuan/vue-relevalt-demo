@@ -83,7 +83,7 @@ export default defineComponent({
       console.log(command)
       switch (command) {
         case 'logout':
-          console.log(proxy)
+          console.log(proxy, '------------')
           proxy.$logout()
           break
       }
@@ -98,10 +98,10 @@ export default defineComponent({
 .top-right-body {
   text-align: right;
   .el-dropdown {
-    height: 50px;
-    line-height: 50px;
+    height: 80px;
+    line-height: 80px;
     min-width: 80px;
-    color: $bcWhite;
+    color: $bcBlack;
   }
 }
 </style>

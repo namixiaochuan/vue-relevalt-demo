@@ -1,7 +1,7 @@
 <template>
   <div class="template-body">
     Home apply
-    <el-button @click="logOut">登出</el-button>
+    <el-button @click="logout">登出</el-button>
   </div>
 </template>
 
@@ -32,7 +32,6 @@ export default defineComponent({
   // components: {},
   setup() {
     const {proxy} = getCurrentInstance();
-    const router = useRouter()
     let data = reactive({
       // 变量可以放这
     })
@@ -57,30 +56,10 @@ export default defineComponent({
     // onDeactivated(() => {})
     // 错误捕获
     // onErrorCaptured(() => {})
-    const logOut = () =>{
-      console.log(proxy)
-      ElMessageBox.confirm(
-          '确定要登出么?',
-          '提示',
-          {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning',
-          }
-      )
-          .then(() => {
-            proxy.$logOut()
-            router.push({path: '/login'})
-          })
-          .catch((e) => {
-            console.error(e)
-            ElMessage({
-              type: 'info',
-              message: 'Delete canceled',
-            })
-          })
+    const logout = () =>{
+      proxy.$logout()
     }
-    return {data, logOut};
+    return {data, logout};
   },
 });
 </script>

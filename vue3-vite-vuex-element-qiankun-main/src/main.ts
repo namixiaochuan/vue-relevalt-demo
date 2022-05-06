@@ -8,6 +8,7 @@ import store from './store'
 import '@/permission' // 权限
 import {registerMicroApps, start, setDefaultMountApp, MicroAppStateActions} from "qiankun";
 import microApps from '@/utils/qiankun-micro'
+import {logout} from './utils/tools'
 // import './mockjs/index'
 
 // 引入公共组件
@@ -17,6 +18,9 @@ const app = createApp(App)
 
 // 实例化公共组件
 app.component('basic-container', basicContainer);
+
+// 全局方法
+app.config.globalProperties.$logout = logout
 
 app.use(store).use(router).use(ElementPlus).mount('#app')
 

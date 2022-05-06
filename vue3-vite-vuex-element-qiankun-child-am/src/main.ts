@@ -2,6 +2,7 @@ import "./public-path.ts";
 import { renderWithQiankun, qiankunWindow } from 'vite-plugin-qiankun/dist/helper';
 import {createApp, toRaw} from 'vue'
 import ElementPlus from 'element-plus'
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import 'element-plus/dist/index.css'
 import '@/style/index.scss'
 import App from './App.vue'
@@ -49,6 +50,11 @@ function render(props:any = {}) {
     app.use(store)
     app.use(router)
     app.use(ElementPlus)
+    // 注册所有icon
+    for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+        app.component(key, component)
+    }
+
     // app.mount('#app')
     app.mount(container ? container.querySelector('#app') : document.getElementById("app"));
 }

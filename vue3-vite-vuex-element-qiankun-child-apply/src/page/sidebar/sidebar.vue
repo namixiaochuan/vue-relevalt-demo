@@ -1,19 +1,36 @@
 <template>
-  <div class="sidebar-body" :style="{height:(viewHeight - 50) + 'px'}" @mouseleave="showThis(false)">
-    <div @mouseenter="showThis(true)">
-      <div class="menu-button" v-for="(item, index) in baseData.menu" :key="index" :class="{'chooise-this': baseData.index == index}" @mouseenter="operationThis(item, false, index)"  @click="operationThis(item, true, index)">
-        <span><el-icon> <component :is="item.icon"></component></el-icon></span>
-        <span>{{ item.label }}</span>
-      </div>
-    </div>
-    <draw-sidebar v-if="baseData.showDrawSidebar && baseData.showDraw" :viewHeight="viewHeight" :drawSodenarData="baseData.drawSodenarData"/>
-  </div>
+<!--  <div class="sidebar-body">-->
+    <el-menu
+        :default-active="baseData.activeIndex"
+        class="sidebar-body"
+        mode="horizontal"
+        background-color="#3569e7"
+        text-color="#fff"
+        active-text-color="#ffd04b"
+        @select="handleSelect"
+    >
+      <template v-for="(item,index) in baseData.menu" :key="index">
+        <el-menu-item v-if="!item.children" :index="item.name">{{ item.label }}</el-menu-item>
+        <el-sub-menu  v-else-if="!!item.children&&item.children.length" :index="item.name">
+          <template #title>{{ item.label }}</template>
+          <template v-for="(item2,index2) in item.children" :key="index2">
+            <el-menu-item v-if="!item2.children" :index="item2.name">{{ item2.label }}</el-menu-item>
+            <el-sub-menu v-else-if="!!item2.children&&item2.children.length" :index="item2.name">
+              <template #title>{{ item2.label }}</template>
+              <template v-for="(item3,index3) in item2.children" :key="index3">
+                <el-menu-item :index="item3.name">{{ item3.label }}</el-menu-item>
+              </template>
+            </el-sub-menu>
+          </template>
+        </el-sub-menu>
+      </template>
+    </el-menu>
+<!--  </div>-->
 </template>
 
 <script lang="ts">
 // import { useStore } from '/@/store'; // 获取缓存
 import store from '@/store'
-import drawSidebar from "@/page/sidebar/drawSidebar.vue";
 import {
   defineComponent, // 它并没有实现任何的逻辑，只是把接收的 Object 直接返回，它的存在是完全让传入的整个对象获得对应的类型，它的存在就是完全为了服务 TypeScript 而存在的。
   reactive, // 实现响应式数据的方法
@@ -41,13 +58,13 @@ export default defineComponent({
       default: ''
     },
   },
-  components: {drawSidebar},
+  components: {},
   setup() {
     console.log(store.getters.menu, '=======store.getters.menu=======')
     let baseData = reactive({
       // 变量可以放这
       showDraw: false, // 是否显示抽屉目录
-      index: -1, // 被选中的项
+      activeIndex: -1, // 被选中的项
       showDrawSidebar: false,
       menu: store.getters.menu,
       drawSodenarData: {}
@@ -73,25 +90,23 @@ export default defineComponent({
     // onDeactivated(() => {})
     // 错误捕获
     // onErrorCaptured(() => {})
-    const showThis = (code: boolean) => {
-      baseData.showDrawSidebar = code
+    // 选择菜单
+    const handleSelect = (item: any, code:boolean = false, index: Number) => {
+      // baseData.drawSodenarData = item
+      // baseData.showDraw = false
+      // baseData.index = index
+      // if (baseData.drawSodenarData.children.length > 0) {
+      //   for (let i = 0; i < baseData.drawSodenarData.children.length; i++) {
+      //     if (baseData.drawSodenarData.children[i].children && baseData.drawSodenarData.children[i].children.length) {
+      //       baseData.showDraw = true
+      //     }
+      //   }
+      // }
+      // if (!baseData.showDraw && code) {
+      //   store.commit('user/SET_TOP_MENU', baseData.drawSodenarData.children)
+      // }
     }
-    const operationThis = (item: any, code:boolean = false, index: Number) => {
-      baseData.drawSodenarData = item
-      baseData.showDraw = false
-      baseData.index = index
-      if (baseData.drawSodenarData.children.length > 0) {
-        for (let i = 0; i < baseData.drawSodenarData.children.length; i++) {
-          if (baseData.drawSodenarData.children[i].children && baseData.drawSodenarData.children[i].children.length) {
-            baseData.showDraw = true
-          }
-        }
-      }
-      if (!baseData.showDraw && code) {
-        store.commit('user/SET_TOP_MENU', baseData.drawSodenarData.children)
-      }
-    }
-    return {baseData, showThis, operationThis};
+    return {baseData, handleSelect};
   },
 });
 </script>
@@ -100,34 +115,8 @@ export default defineComponent({
 @import '../../style/common/base-setting.scss';
 
 .sidebar-body {
-  display: inline-block;
-  width: 66px;
-  background-color: $bcBlue;
-  vertical-align: top;
-
-  .menu-button {
-    //height: 40px;
-    //line-height: 40px;
-    padding: 6px 0px;
-    text-align: center;
-    color: $bcWhite;
-    cursor: pointer;
-
-    &.chooise-this {
-      background-color: $dimBlue;
-    }
-
-    span {
-      display: inline-block;
-      width: 100%;
-      height: 20px;
-      line-height: 20px;
-      font-size: $normalSize;
-
-      .el-icon {
-        font-size: $bigIconSize;
-      }
-    }
-  }
+  width: 100%;
+  height: 40px;
+  //background-color: $bcBlue;
 }
 </style>

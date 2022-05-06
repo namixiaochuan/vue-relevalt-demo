@@ -1,5 +1,6 @@
-import { MockMethod } from "vite-plugin-mock";
-import { Random,mock } from "mockjs";
+import {MockMethod} from "vite-plugin-mock";
+import {Random, mock} from "mockjs";
+import {menuList} from './menuList'
 // const successCode = 200;
 // const hasNotToken = 401;
 // const hasNotPermission = 403;
@@ -25,9 +26,9 @@ export default [
         url: "/auth/oauth/token",
         method: "post",
         response: (req: any) => {
-            console.log('===============',req)
+            console.log('===============', req)
             // console.log(Random.guid())
-            let params:any = {
+            let params: any = {
                 access_token: Random.guid(),
                 dept_id: Random.id(),
                 expires_in: Random.id(),
@@ -48,9 +49,13 @@ export default [
         url: "/admin/menu",
         method: "get",
         response: (req: any) => {
-            console.log('===============',req)
+            console.log('===============', req, req.query.roleGroup)
             // console.log(Random.guid())
-            let params:any = []
+            let params: any = {
+                code: 0,
+                data: menuList(req.query.roleGroup),
+                message: ''
+            }
             return params
         },
     },
@@ -59,9 +64,9 @@ export default [
         url: "/auth/token/logout",
         method: "post",
         response: (req: any) => {
-            console.log('===============',req)
+            console.log('===============', req)
             // console.log(Random.guid())
-            let params:any = []
+            let params: any = []
             return params
         },
     },

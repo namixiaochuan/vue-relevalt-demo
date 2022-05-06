@@ -43,7 +43,7 @@ export const loginByUsername = (username: string, password: string, code: string
 
 export function GetMenu(data: string = '') {
     return request({
-        url: `/admin/menu?${data ? ('roleGroup=' + data + '-') : ''}`,
+        url: `/admin/menu?${data ? ('roleGroup=' + data + '') : ''}`,
         method: 'get'
     })
 }

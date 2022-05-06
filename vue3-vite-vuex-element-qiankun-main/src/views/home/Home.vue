@@ -10,6 +10,7 @@
 <script lang="ts">
 // import { useStore } from '@/store'; // 获取缓存
 import store from '@/store'
+import {getCurrentInstance} from 'vue'
 import {systemList} from '@/assets/base/systemList.ts'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { useRouter } from 'vue-router'
@@ -34,6 +35,7 @@ export default defineComponent({
   // components: {},
   setup() {
     const router = useRouter()
+    const {proxy} = getCurrentInstance();
     // 基础数据
     let baseData = reactive({
       // 变量可以放这
@@ -61,33 +63,34 @@ export default defineComponent({
     // 错误捕获
     // onErrorCaptured(() => {})
     const logOut = () =>{
-      ElMessageBox.confirm(
-          '确定要登出么?',
-          '提示',
-          {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning',
-          }
-      )
-          .then(() => {
-            store.dispatch('user/LogOut')
-                .then((res:any)=>{
-              router.push({path: '/login'})
-                  ElMessage({
-                    type: 'success',
-                    message: '登出成功',
-                  })
-            }).catch((err:any)=>{
-              console.log(err)
-            })
-          })
-          .catch(() => {
-            // ElMessage({
-            //   type: 'info',
-            //   message: 'Delete canceled',
-            // })
-          })
+      proxy.$logout()
+      // ElMessageBox.confirm(
+      //     '确定要登出么?',
+      //     '提示',
+      //     {
+      //       confirmButtonText: '确定',
+      //       cancelButtonText: '取消',
+      //       type: 'warning',
+      //     }
+      // )
+      //     .then(() => {
+      //       store.dispatch('user/LogOut')
+      //           .then((res:any)=>{
+      //         router.push({path: '/login'})
+      //             ElMessage({
+      //               type: 'success',
+      //               message: '登出成功',
+      //             })
+      //       }).catch((err:any)=>{
+      //         console.log(err)
+      //       })
+      //     })
+      //     .catch(() => {
+      //       // ElMessage({
+      //       //   type: 'info',
+      //       //   message: 'Delete canceled',
+      //       // })
+      //     })
     }
     /**
      * 跳转到的子系统地址

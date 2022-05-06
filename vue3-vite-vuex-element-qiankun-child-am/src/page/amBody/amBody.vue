@@ -1,5 +1,6 @@
 <template>
   <div class="am-body" :style="{height:(viewHeight - 50) + 'px'}">
+    <top-sidebar/>
     <keep-alive>
       <router-view/>
     </keep-alive>
@@ -8,6 +9,7 @@
 
 <script lang="ts">
 // import { useStore } from '/@/store'; // 获取缓存
+import topSidebar from "@/page/sidebar/topSidebar.vue";
 import {
   defineComponent, // 它并没有实现任何的逻辑，只是把接收的 Object 直接返回，它的存在是完全让传入的整个对象获得对应的类型，它的存在就是完全为了服务 TypeScript 而存在的。
   reactive, // 实现响应式数据的方法
@@ -35,7 +37,7 @@ export default defineComponent({
       default: ''
     },
   },
-  // components: {},
+  components: {topSidebar},
   setup() {
     let baseData = reactive({
       // 变量可以放这

@@ -65,6 +65,7 @@ export default defineComponent({
   // props:{},
   components: {Hide, View},
   setup() {
+    console.log('store.getters.login_syetem=========',store.getters.login_syetem)
     const router = useRouter()
     let passwdType = 'password'
     let baseData = reactive({
@@ -75,7 +76,7 @@ export default defineComponent({
     let loginForm = reactive({
       username: 'admin',
       password: '1qaz!QAZ1qaz',
-      system: ''
+      system: store.getters.login_syetem || ''
     })
     let rules = reactive({
       username: [
@@ -113,7 +114,10 @@ export default defineComponent({
           console.log('submit!')
           store.dispatch('user/LoginByUsername', loginForm)
               .then((res: any) => {
-                router.push({path: loginForm.system + '/home'})
+                store.commit("user/SET_LOGIN_SYSTEM", loginForm.system)
+                store.dispatch('user/GetMenu').then(res=>{
+                  router.push({path: loginForm.system + '/home'})
+                })
               }).catch((err: any) => {
             console.log(err)
           })

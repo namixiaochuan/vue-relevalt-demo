@@ -24,6 +24,9 @@ const state = () => ({
     keyLogin: getStore({
         name: "keyLogin"
     }) || false,
+    userInfo: getStore({
+        name: "userInfo"
+    }) || {},
     // 菜单
     menu: getStore({
         name: "menu"
@@ -59,6 +62,15 @@ const mutations = {
         setStore({
             name: "refresh_token",
             content: state.refresh_token,
+            type: "session"
+        });
+    },
+    // 保存用户基础信息
+    SET_USER_INFO: (state: any, userInfo: any) => {
+        state.userInfo = userInfo;
+        setStore({
+            name: "userInfo",
+            content: state.userInfo,
             type: "session"
         });
     },

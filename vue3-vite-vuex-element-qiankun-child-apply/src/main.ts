@@ -44,7 +44,7 @@ function render(props:any = {}) {
     app.component('basic-container', basicContainer);
 
     // 全局方法
-    app.config.globalProperties.$logOut = props.logOut
+    app.config.globalProperties.$logout = props.logout
     app.config.globalProperties.$mainStore = props.mainStore
 
     app.use(store)

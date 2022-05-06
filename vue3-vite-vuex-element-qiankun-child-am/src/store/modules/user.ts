@@ -31,6 +31,9 @@ const state = () => ({
     menu: getStore({
         name: "menu"
     }) || [],
+    top_menu: getStore({
+        name: "top_menu"
+    }) || [],
     // 权限信息
     permissions: getStore({
         name: "permissions"
@@ -110,6 +113,15 @@ const mutations = {
         setStore({
             name: "menu",
             content: state.menu,
+            type: "session"
+        });
+    },
+    // 顶部的菜单操作
+    SET_TOP_MENU: (state: any, top_menu: any) => {
+        state.top_menu = top_menu;
+        setStore({
+            name: "top_menu",
+            content: state.top_menu,
             type: "session"
         });
     },

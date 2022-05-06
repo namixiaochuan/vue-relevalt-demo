@@ -12,6 +12,9 @@ interface StoreUser {
 }
 
 const state = () => ({
+    login_syetem: getStore({
+        name: "login_syetem"
+    }) || "",
     access_token: getStore({
         name: "access_token"
     }) || "",
@@ -30,6 +33,9 @@ const state = () => ({
     // 菜单
     menu: getStore({
         name: "menu"
+    }) || [],
+    top_menu: getStore({
+        name: "top_menu"
     }) || [],
     // 权限信息
     permissions: getStore({
@@ -50,6 +56,24 @@ const state = () => ({
 const getters = {}
 
 const mutations = {
+    // 记录登录的系统
+    SET_LOGIN_SYSTEM: (state: any, login_syetem: String) => {
+        state.login_syetem = login_syetem;
+        setStore({
+            name: "login_syetem",
+            content: state.login_syetem,
+            type: "session"
+        });
+    },
+    // 顶部的菜单操作
+    SET_TOP_MENU: (state: any, top_menu: any) => {
+        state.top_menu = top_menu;
+        setStore({
+            name: "top_menu",
+            content: state.top_menu,
+            type: "session"
+        });
+    },
     // 是否是子系统
     SUB_SYSTEM: (state: any, subSystem: Boolean) => {
         state.subSystem = subSystem;
@@ -114,7 +138,7 @@ const mutations = {
         });
     },
     IS_GET_ROLES: (state: any, isGetRoles: Boolean) => {
-        state.isGetRoles = true;
+        state.isGetRoles = isGetRoles;
         setStore({
             name: "isGetRoles",
             content: state.isGetRoles,
@@ -135,11 +159,14 @@ const mutations = {
 const actions = {
     // 获取系统菜单
     async GetMenu({commit}) {
-        let res: any = await GetMenu()
-        if (res.code == 0) {
-            commit("SET_MENU", res.data);
-            commit("IS_GET_ROLES", true);
-        }
+        // return new Promise((resolve, reject) => {
+            let res: any = await GetMenu(state().login_syetem)
+            if (res.code == 0) {
+                commit("SET_MENU", res.data);
+                commit("IS_GET_ROLES", true);
+            }
+            return !!state().login_syetem
+        // })
     },
     // 获取系统菜单
     async subSystem({commit}, subSystem: Boolean) {
@@ -175,6 +202,7 @@ const actions = {
         commit("SET_REFRESH_TOKEN", null);
         commit("SET_EXPIRES_IN", null);
         commit("SET_MENU", null);
+        commit("SET_TOP_MENU", null);
         commit("IS_GET_ROLES", false);
         window.sessionStorage.clear();
         return true

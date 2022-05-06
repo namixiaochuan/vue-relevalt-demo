@@ -1,7 +1,6 @@
 import CryptoJS from "crypto-js"
 import {ElMessage, ElMessageBox} from "element-plus";
 import store from "@/store";
-import router from '@/router'
 
 /**
  * 判断数据格式
@@ -150,11 +149,11 @@ export const logout = () =>{
         .then(() => {
             store.dispatch('user/LogOut')
                 .then((res:any)=>{
-                    router.push({path: '/login'})
                     ElMessage({
                         type: 'success',
                         message: '登出成功',
                     })
+                    window.location.href = '/login'
                 }).catch((err:any)=>{
                 console.log(err)
             })
