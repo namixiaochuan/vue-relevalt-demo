@@ -65,6 +65,16 @@ const microApps:any = [
         entry: '//localhost:9003/am',
         activeRule: "/am",
     },
+    {
+        name: "applyHash",
+        entry: '//localhost:9004/applyHash',
+        activeRule: "/applyHash",
+    },
+    {
+        name: "amHash",
+        entry: '//localhost:9005/amHash',
+        activeRule: "/amHash",
+    },
     // {
     //     name: "questionbank",
     //     entry: '//127.0.0.1:3002/questionbank',

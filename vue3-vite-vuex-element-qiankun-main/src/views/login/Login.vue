@@ -116,7 +116,7 @@ export default defineComponent({
               .then((res: any) => {
                 store.commit("user/SET_LOGIN_SYSTEM", loginForm.system)
                 store.dispatch('user/GetMenu').then(res=>{
-                  router.push({path: loginForm.system + '/home'})
+                  router.push({path: loginForm.system})
                 })
               }).catch((err: any) => {
             console.log(err)
@@ -150,7 +150,7 @@ export default defineComponent({
   align-items: center;
 
   .login-form {
-    width: 500px;
+    width: 560px;
     .login-form-body {
       margin-left: 50px;
     }

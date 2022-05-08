@@ -26,6 +26,7 @@ import {
   // onDeactivated, // 【单步】 停步前执行
   // onErrorCaptured // 错误捕获
 } from 'vue'
+import store from "@/store";
 
 export default defineComponent({
   name: "drawSidebar",
@@ -68,6 +69,7 @@ export default defineComponent({
     // onErrorCaptured(() => {})
     const operationThis = (item: any, code:boolean = false, index: Number) => {
       baseData.index = index
+      store.commit('user/SET_TOP_MENU', item.children)
     }
     return {baseData, operationThis};
   },
