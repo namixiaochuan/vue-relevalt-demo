@@ -3,10 +3,10 @@
     <basic-container class="login-form" :baseData="baseData">
       <el-form class="login-form-body" :model="loginForm" ref="ruleFormRef" :rules="rules" label-width="80px">
         <el-form-item label="用户名" prop="username">
-          <el-input v-model="loginForm.username"/>
+          <el-input v-model="loginForm.username" placeholder="请输入用户名"/>
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input :type="baseData.passwdType" v-model="loginForm.password">
+          <el-input :type="baseData.passwdType" v-model="loginForm.password" placeholder="请输入密码">
             <template #suffix>
               <el-icon class="el-input__icon password-icon" @click="changePassword">
                 <View v-if="baseData.passwdType == 'password'"/>
@@ -133,8 +133,12 @@ export default defineComponent({
     }
 
     const resetForm = (formEl: FormInstance | undefined) => {
-      if (!formEl) return
-      formEl.resetFields()
+      console.log(formEl)
+      // if (!formEl) return
+      loginForm.username = ''
+      loginForm.password = ''
+
+      // formEl.resetFields()
     }
     return {baseData, passwdType, changePassword, loginForm, rules, ruleFormRef, submitForm, resetForm};
   },
@@ -150,9 +154,12 @@ export default defineComponent({
   align-items: center;
 
   .login-form {
-    width: 560px;
+    width: 760px;
     .login-form-body {
       margin-left: 50px;
+      .el-radio {
+        min-width: 250px;
+      }
     }
   }
 

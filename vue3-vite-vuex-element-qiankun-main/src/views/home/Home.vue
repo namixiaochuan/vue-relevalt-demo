@@ -1,9 +1,12 @@
 <template>
-  <div class="template-body">
-    <template  v-for="(item, index) in baseData.systemList">
-      <el-button v-if="item.path" type="primary" @click="jumpToChildSystem(item)" :key="index">{{item.name}}</el-button>
-    </template>
-    <el-button type="danger" @click="logOut">登出</el-button>
+  <div class="home-body">
+    <div class="control-panel">
+      <template v-for="(item, index) in baseData.systemList">
+        <el-button v-if="item.path" type="primary" @click="jumpToChildSystem(item)" :key="index">{{ item.name }}
+        </el-button>
+      </template>
+      <el-button type="danger" @click="logOut">登出</el-button>
+    </div>
   </div>
 </template>
 
@@ -12,8 +15,8 @@
 import store from '@/store'
 import {getCurrentInstance} from 'vue'
 import {systemList} from '@/assets/base/systemList.ts'
-import { ElMessage, ElMessageBox } from 'element-plus'
-import { useRouter } from 'vue-router'
+import {ElMessage, ElMessageBox} from 'element-plus'
+import {useRouter} from 'vue-router'
 import {
   defineComponent, // 它并没有实现任何的逻辑，只是把接收的 Object 直接返回，它的存在是完全让传入的整个对象获得对应的类型，它的存在就是完全为了服务 TypeScript 而存在的。
   reactive, // 实现响应式数据的方法
@@ -62,7 +65,7 @@ export default defineComponent({
     // onDeactivated(() => {})
     // 错误捕获
     // onErrorCaptured(() => {})
-    const logOut = () =>{
+    const logOut = () => {
       proxy.$logout()
       // ElMessageBox.confirm(
       //     '确定要登出么?',
@@ -95,7 +98,7 @@ export default defineComponent({
     /**
      * 跳转到的子系统地址
      */
-    const jumpToChildSystem = (data:any) =>{
+    const jumpToChildSystem = (data: any) => {
       console.log(data)
       router.push({path: data.path + '/home'})
     }
@@ -103,5 +106,31 @@ export default defineComponent({
   },
 });
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
+// 样式基础
+@import '../../style/common/base-setting.scss';
+
+.home-body {
+  background-color: $lightGrey;
+  width: 100%;
+  height: 100%;
+  //background-color: #4389b9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .control-panel {
+    width: 560px;
+    box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
+    background-color: $bcWhite;
+    padding: 20px;
+
+    .el-button {
+      margin-left: 20px;
+      min-width: 260px;
+      //display: block;
+      margin-top: 20px;
+    }
+  }
+}
 </style>
