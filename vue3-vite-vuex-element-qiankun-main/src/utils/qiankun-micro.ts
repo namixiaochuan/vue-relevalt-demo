@@ -75,6 +75,11 @@ const microApps:any = [
         entry: '//localhost:9005/amHash',
         activeRule: "/amHash",
     },
+    {
+        name: "vue2Apply",
+        entry: '//localhost:9006/vue2Apply',
+        activeRule: "/vue2Apply",
+    },
     // {
     //     name: "questionbank",
     //     entry: '//127.0.0.1:3002/questionbank',

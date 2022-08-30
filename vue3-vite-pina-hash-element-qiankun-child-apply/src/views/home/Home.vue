@@ -1,6 +1,6 @@
 <template>
   <div class="template-body">
-    Home apply
+    vue3-vite-pina-hash-element-qiankun-child-apply
     <el-button @click="logout">登出</el-button>
   </div>
 </template>

@@ -1,7 +1,18 @@
 <template>
   <div class="home-body">
     <div class="control-panel">
-      <template v-for="(item, index) in baseData.systemList">
+      <div class="home-header"><span>框架：</span>vue3</div>
+      <template v-for="(item, index) in baseData.systemList.vue3">
+        <el-button v-if="item.path" type="primary" @click="jumpToChildSystem(item)" :key="index">{{ item.name }}
+        </el-button>
+      </template>
+      <div class="home-header"><span>框架：</span>vue2</div>
+      <template v-for="(item, index) in baseData.systemList.vue2">
+        <el-button v-if="item.path" type="primary" @click="jumpToChildSystem(item)" :key="index">{{ item.name }}
+        </el-button>
+      </template>
+      <div class="home-header"><span>其他</span></div>
+      <template v-for="(item, index) in baseData.systemList.other">
         <el-button v-if="item.path" type="primary" @click="jumpToChildSystem(item)" :key="index">{{ item.name }}
         </el-button>
       </template>
@@ -130,6 +141,13 @@ export default defineComponent({
       min-width: 260px;
       //display: block;
       margin-top: 20px;
+    }
+
+    .home-header {
+      border-left: 4px solid $bcBlue;
+      padding-left: 5px;
+      margin-left: 2px;
+      margin-top: 16px;
     }
   }
 }

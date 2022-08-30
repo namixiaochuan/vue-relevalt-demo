@@ -17,7 +17,7 @@
         </el-form-item>
         <el-form-item label="操作系统" prop="password">
           <el-radio-group v-model="loginForm.system">
-            <el-radio v-for="(item, index) in baseData.systemList" :label="item.path" :key="index">{{ item.name }}</el-radio>
+            <el-radio v-for="(item, index) in baseData.systemList.vue3" :label="item.path" :key="index">{{ item.name }}</el-radio>
 <!--            <el-radio :label="'/apply'">申报端</el-radio>-->
 <!--            <el-radio :label="'/am'">管理端</el-radio>-->
             <!--          <el-radio :label="6">Option B</el-radio>-->

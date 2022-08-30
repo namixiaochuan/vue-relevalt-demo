@@ -1,6 +1,6 @@
 <template>
   <div class="template-body">
-    Home am
+    vue3-vite-vuex-element-qiankun-child-am
   </div>
 </template>
 
