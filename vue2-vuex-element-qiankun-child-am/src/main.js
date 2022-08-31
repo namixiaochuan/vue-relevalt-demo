@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
+import './permission' // 权限
+import './error' // 日志
 //引入VueRouter
 import VueRouter from 'vue-router'
 //引入路由器
@@ -15,9 +17,16 @@ let instance = null
 
 function render (props = {}) {
   const { container, router: parentRouter  } = props
+
+
   Vue.use(VueRouter) // 别忘了写这条，官网复制过来没有这个
   Vue.use(ElementUI);
   Vue.prototype.$parentRouter = parentRouter
+  Vue.prototype.$logout = props.logout
+  Vue.prototype.$mainStore = props.mainStore
+
+
+
   initParentRouter(parentRouter)
   console.log(parentRouter)
   instance = new Vue({

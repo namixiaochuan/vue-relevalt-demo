@@ -15,13 +15,12 @@
             </template>
           </el-input>
         </el-form-item>
-        <el-form-item label="操作系统" prop="password">
+        <el-form-item label="框架" prop="password">
           <el-radio-group v-model="loginForm.system">
+            <el-radio class="vue3-body" label="1" disabled>vue3</el-radio>
             <el-radio v-for="(item, index) in baseData.systemList.vue3" :label="item.path" :key="index">{{ item.name }}</el-radio>
-<!--            <el-radio :label="'/apply'">申报端</el-radio>-->
-<!--            <el-radio :label="'/am'">管理端</el-radio>-->
-            <!--          <el-radio :label="6">Option B</el-radio>-->
-            <!--          <el-radio :label="9">Option C</el-radio>-->
+            <el-radio class="vue2-body" label="1" disabled>vue2</el-radio>
+            <el-radio v-for="(item, index) in baseData.systemList.vue2" :label="item.path" :key="index">{{ item.name }}</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item>
@@ -145,6 +144,8 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
+// 样式基础
+@import '../../style/common/base-setting.scss';
 .login-body {
   width: 100%;
   height: 100%;
@@ -159,6 +160,19 @@ export default defineComponent({
       margin-left: 50px;
       .el-radio {
         min-width: 250px;
+      }
+      .vue3-body, .vue2-body {
+        width: 100%;
+        ::v-deep .el-radio__inner {
+          display: none;
+        }
+        ::v-deep .el-radio__label {
+          color: var(--el-radio-text-color);
+          border-left: 4px solid $bcBlue;
+          padding-left: 5px;
+          margin-left: 2px;
+          margin-top: 16px;
+        }
       }
     }
   }

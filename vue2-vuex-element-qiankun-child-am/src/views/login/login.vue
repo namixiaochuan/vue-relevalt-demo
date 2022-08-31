@@ -1,6 +1,6 @@
 <!--主体-->
 <template>
-  <div></div>
+  <div>login</div>
 </template>
 
 

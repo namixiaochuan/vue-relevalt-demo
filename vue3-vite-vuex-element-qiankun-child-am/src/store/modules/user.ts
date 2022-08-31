@@ -1,5 +1,5 @@
 import {Module} from "vuex";
-// import {loginByUsername, loginByUsername2, logout, GetMenu} from '../../api/login'
+import {loginByUsername, loginByUsername2, logout, GetMenu} from '../../api/login'
 import {getStore, setStore} from "@/utils/store";
 import {
     deepClone,

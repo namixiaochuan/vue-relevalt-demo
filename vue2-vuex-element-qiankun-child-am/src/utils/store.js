@@ -1,3 +1,8 @@
+import {
+    validatenull
+} from '@/utils/validate'
+import website from '@/assets/base/website.json'
+const keyName = website.key + '-';
 /**
  * 存储localStorage
  */
@@ -6,15 +11,21 @@ export const setStore = (params = {}) => {
         name,
         content,
         type,
+        isNeedSession
     } = params;
+    name = keyName + name
     let obj = {
         dataType: typeof (content),
         content: content,
         type: type,
         datetime: new Date().getTime()
     }
-    if (type) window.sessionStorage.setItem(name, JSON.stringify(obj));
-    else window.localStorage.setItem(name, JSON.stringify(obj));
+    try {
+        if ((type && website == 'sessionStorage') || isNeedSession) window.sessionStorage.setItem(name, JSON.stringify(obj));
+        else window.localStorage.setItem(name, JSON.stringify(obj));
+    } catch (e) {
+        console.log('----------234------------', e)
+    }
 }
 /**
  * 获取localStorage
@@ -25,9 +36,12 @@ export const getStore = (params = {}) => {
         name,
         debug
     } = params;
+    name = keyName + name
     let obj = {},
         content;
     obj = window.sessionStorage.getItem(name);
+    if (validatenull(obj)) obj = window.localStorage.getItem(name);
+    if (validatenull(obj)) return;
     try {
         obj = JSON.parse(obj);
     } catch{
@@ -45,6 +59,7 @@ export const getStore = (params = {}) => {
     } else if (obj.dataType == 'object') {
         content = obj.content;
     }
+    console.log('------123-------',content, name)
     return content;
 }
 /**
@@ -53,10 +68,10 @@ export const getStore = (params = {}) => {
 export const removeStore = (params = {}) => {
     let {
         name,
-        type
+        // type
     } = params;
-    // name = keyName + name
-    if (type) {
+    name = keyName + name
+    if (window.sessionStorage.getItem(name) ) {
         window.sessionStorage.removeItem(name);
     } else {
         window.localStorage.removeItem(name);
@@ -102,7 +117,7 @@ export const getAllStore = (params = {}) => {
  */
 export const clearStore = (params = {}) => {
     let { type } = params;
-    if (type) {
+    if (type && website == 'sessionStorage') {
         window.sessionStorage.clear();
     } else {
         window.localStorage.clear()
