@@ -71,7 +71,9 @@ export default {
     /**
      *  初始方法
      */
-    init() {}
+    init() {
+      console.log(this.$store.getters.menu)
+    }
   },
   // 过滤器
   filter: {},
