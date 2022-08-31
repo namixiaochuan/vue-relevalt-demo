@@ -14,7 +14,16 @@
 export default {
   name: 'applyBody',
   // 父组件通过 props 向下传递数据给子组件；子组件通过 events 给父组件发送消息。
-  props: {},
+  props: {
+    viewWidth: {
+      type: [Number, String],
+      default: ''
+    },
+    viewHeight: {
+      type: [Number, String],
+      default: ''
+    },
+  },
   // 調用组件
   components: {},
   // 定义参数

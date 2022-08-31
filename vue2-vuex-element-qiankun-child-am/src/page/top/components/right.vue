@@ -1,14 +1,14 @@
 <!--主体-->
 <template>
-  <div class="top-right-body">{{baseData}}
-<!--    <el-dropdown @command="handleClick">-->
-<!--  <span class="el-dropdown-link">-->
-<!--    {{ baseData.userInfo }}<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>-->
-<!--  </span>-->
-<!--      <el-dropdown-menu slot="dropdown">-->
-<!--        <el-dropdown-item command="logout">登出</el-dropdown-item>-->
-<!--      </el-dropdown-menu>-->
-<!--    </el-dropdown>-->
+  <div class="top-right-body">
+    <el-dropdown @command="handleClick">
+  <span class="el-dropdown-link">
+    {{ baseData.userInfo }}<i class="el-icon-arrow-down el-icon--right"></i>
+  </span>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item command="logout">登出</el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown>
   </div>
 </template>
 
@@ -26,6 +26,7 @@ export default {
   data() {
     return {
       baseData: {
+        userInfo: ''
         // userInfo: this.$store.getters.userInfo
       }
     }
@@ -44,7 +45,6 @@ export default {
      *  初始方法
      */
     init() {
-      console.log('========this.$store.getters======', this.$store.getters)
     }
   },
   // 过滤器
@@ -88,6 +88,16 @@ export default {
 }
 </script>
 
-<!--样式-->
-<style lang="scss">
+<style lang="scss" scoped>
+// 样式基础
+@import '../../../style/common/base-setting.scss';
+.top-right-body {
+  text-align: right;
+  .el-dropdown {
+    height: 80px;
+    line-height: 80px;
+    min-width: 80px;
+    color: $bcBlack;
+  }
+}
 </style>

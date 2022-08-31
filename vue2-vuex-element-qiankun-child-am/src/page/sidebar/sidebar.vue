@@ -1,6 +1,30 @@
 <!--主体-->
 <template>
-  <div></div>
+  <el-menu
+      :default-active="baseData.activeIndex"
+      class="sidebar-body"
+      mode="horizontal"
+      background-color="#3569e7"
+      text-color="#fff"
+      active-text-color="#ffd04b"
+      @select="handleSelect"
+  >
+    <div v-for="(item,index) in baseData.menu" :key="index">
+      <el-menu-item v-if="!item.children" :index="item.name">{{ item.label }}</el-menu-item>
+      <el-sub-menu  v-else-if="!!item.children&&item.children.length" :index="item.name">
+        <template #title>{{ item.label }}</template>
+        <div v-for="(item2,index2) in item.children" :key="index2">
+          <el-menu-item v-if="!item2.children" :index="item2.name">{{ item2.label }}</el-menu-item>
+          <el-sub-menu v-else-if="!!item2.children&&item2.children.length" :index="item2.name">
+            <template #title>{{ item2.label }}</template>
+            <div v-for="(item3,index3) in item2.children" :key="index3">
+              <el-menu-item :index="item3.name">{{ item3.label }}</el-menu-item>
+            </div>
+          </el-sub-menu>
+        </div>
+      </el-sub-menu>
+    </div>
+  </el-menu>
 </template>
 
 
@@ -15,10 +39,35 @@ export default {
   components: {},
   // 定义参数
   data() {
-    return {}
+    return {
+      baseData: {
+        // 变量可以放这
+        showDraw: false, // 是否显示抽屉目录
+        activeIndex: '-1', // 被选中的项
+        showDrawSidebar: false,
+        menu: this.$store.getters.menu || [],
+        drawSodenarData: {}
+      }
+    }
   },
   // 方法
   methods: {
+    handleSelect(item, code, index){
+      console.log(item, code, index)
+      // baseData.drawSodenarData = item
+      // baseData.showDraw = false
+      // baseData.index = index
+      // if (baseData.drawSodenarData.children.length > 0) {
+      //   for (let i = 0; i < baseData.drawSodenarData.children.length; i++) {
+      //     if (baseData.drawSodenarData.children[i].children && baseData.drawSodenarData.children[i].children.length) {
+      //       baseData.showDraw = true
+      //     }
+      //   }
+      // }
+      // if (!baseData.showDraw && code) {
+      //   store.commit('user/SET_TOP_MENU', baseData.drawSodenarData.children)
+      // }
+    },
     /**
      *  初始方法
      */
